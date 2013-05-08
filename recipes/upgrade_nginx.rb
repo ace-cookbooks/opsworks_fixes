@@ -32,3 +32,12 @@ package 'nginx' do
   action :upgrade
   notifies :restart, resources(:service => 'nginx')
 end
+
+# Make sure that default.conf and example_ssl.conf are not present
+bash "remove default nginx config" do
+  user "root"
+  code <<-EOH
+  rm -f /etc/nginx/conf.d/default.conf
+  rm -f /etc/nginx/conf.d/example_ssl.conf
+  EOH
+end
