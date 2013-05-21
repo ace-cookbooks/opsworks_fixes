@@ -1,14 +1,14 @@
 if node[:remote_packages]
-  node[:remote_packages].each do |pkg|
-    full_name = "#{pkg['name']}-#{pkg['version']}"
+  node[:remote_packages].each do |name, pkg|
+    full_name = "#{name}-#{pkg['version']}"
     rpm_name = "#{full_name}.rpm"
 
     remote_file "/tmp/#{rpm_name}" do
-      source pkg['rpm_url']
+      source pkg['url']
       action :create_if_missing
 
       not_if do
-        system("rpm -q #{pkg['name']} | grep -q '#{full_name}'")
+        system("rpm -q #{name} | grep -q '#{full_name}'")
       end
     end
 
@@ -17,7 +17,7 @@ if node[:remote_packages]
       source "/tmp/#{rpm_name}"
 
       not_if do
-        system("rpm -q #{pkg['name']} | grep -q '#{full_name}'")
+        system("rpm -q #{name} | grep -q '#{full_name}'")
       end
     end
   end
