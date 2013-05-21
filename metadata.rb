@@ -16,4 +16,6 @@ recipe "opsworks_fixes", "Installs all opsworks fixes"
 recipe "opsworks_fixes::upgrade_nginx", "Upgrades nginx to latest official release"
 recipe "opsworks_fixes::install_epel_packages", "Installs rpm packages from EPEL"
 recipe "opsworks_fixes::install_w_epel", "Installs rpm packages from EPEL; short recipe name"
+recipe "opsworks_fixes::install_remote_packages", "Installs rpm packages from urls"
+recipe "opsworks_fixes::install_w_remote", "Installs rpm packages from urls; short recipe name"
 
