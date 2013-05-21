@@ -14,4 +14,5 @@ end
 
 recipe "opsworks_fixes", "Installs all opsworks fixes"
 recipe "opsworks_fixes::upgrade_nginx", "Upgrades nginx to latest official release"
+recipe "opsworks_fixes::install_epel_packages", "Installs rpm packages from EPEL"
 
