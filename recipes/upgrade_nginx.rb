@@ -21,16 +21,15 @@ template "/etc/yum.repos.d/nginx.repo" do
     :enabled => true,
     :priority => '10'
   })
-  # FIXME: Update syntax once chef is upgraded past 0.9
-  notifies :run, resources(:execute => "yum-makecache"), :immediately
-  notifies :create, resources(:ruby_block => "reload-internal-yum-cache"), :immediately
+  notifies :run, 'execute[yum-makecache]', :immediately
+  notifies :create, 'ruby_block[reload-internal-yum-cache]', :immediately
 end
 
 include_recipe 'nginx::service'
 
 package 'nginx' do
   action :upgrade
-  notifies :restart, resources(:service => 'nginx')
+  notifies :restart, 'service[nginx]'
 end
 
 # Make sure that default.conf and example_ssl.conf are not present
