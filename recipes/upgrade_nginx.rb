@@ -1,28 +1,19 @@
-#get the metadata
-execute "yum-makecache" do
-  command "yum -q makecache"
-  action :nothing
-end
-#reload internal Chef yum cache
-ruby_block "reload-internal-yum-cache" do
-  block do
-    Chef::Provider::Package::Yum::YumCache.instance.reload
-  end
-  action :nothing
+yum_repository 'nginx' do
+  description 'nginx stable repo'
+  baseurl 'http://nginx.org/packages/centos/6/$basearch/'
+  enabled true
+  priority 9
+
+  action :create
 end
 
-template "/etc/yum.repos.d/nginx.repo" do
-  source 'repo.erb'
-  mode '0644'
-  variables({
-    :repo_name => 'nginx',
-    :description => 'nginx repo',
-    :url => 'http://nginx.org/packages/centos/6/$basearch/',
-    :enabled => true,
-    :priority => '10'
-  })
-  notifies :run, 'execute[yum-makecache]', :immediately
-  notifies :create, 'ruby_block[reload-internal-yum-cache]', :immediately
+yum_repository 'nginx' do
+  description 'nginx mainline repo'
+  baseurl 'http://nginx.org/packages/mainline/centos/6/$basearch/'
+  enabled false
+  priority 9
+
+  action :create
 end
 
 include_recipe 'nginx::service'
