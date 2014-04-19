@@ -2,7 +2,7 @@ yum_repository 'nginx' do
   description 'nginx stable repo'
   baseurl 'http://nginx.org/packages/centos/6/$basearch/'
   enabled true
-  priority 9
+  priority '9'
 
   action :create
 end
@@ -11,7 +11,7 @@ yum_repository 'nginx' do
   description 'nginx mainline repo'
   baseurl 'http://nginx.org/packages/mainline/centos/6/$basearch/'
   enabled false
-  priority 9
+  priority '9'
 
   action :create
 end
